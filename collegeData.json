@@ -1,0 +1,283 @@
+{
+  "college_info": {
+    "name": "Sentral Digital College Kuala Lumpur",
+    "abbreviation": "SDCKL",
+    "contact": {
+      "phone": "03-9213 0505",
+      "mobile": "+6011-14740026",
+      "email": ["enquiry@sdckl.edu.my", "info@sdckl.edu.my"],
+      "waze": "Sentral Digital College",
+      "website": "https://sdckl.edu.my",
+      "application_portal": "https://apply.sdckl.edu.my"
+    },
+    "location": {
+      "address": "No.6-1, Jalan Tun Sambanthan 3, Brickfields, 50470 Kuala Lumpur, Malaysia",
+      "area": "Downtown Kuala Lumpur, Brickfields",
+      "description": "Centrally located in KL with easy access to public transport and main train stations"
+    }
+  },
+  "programmes": {
+    "available": [
+      {
+        "name": "Diploma in Logistics and Supply Chain",
+        "code": "DLS",
+        "focus": "Efficient management of goods and services",
+        "career_path": "Logistics and supply chain management"
+      },
+      {
+        "name": "Diploma in Business Administration",
+        "code": "DBA",
+        "focus": "Business operations, management principles, entrepreneurship",
+        "career_path": "Business-related careers across industries"
+      },
+      {
+        "name": "Diploma in Accounting",
+        "code": "DAC",
+        "focus": "Financial reporting, taxation, auditing",
+        "career_path": "Accounting and finance sectors"
+      },
+      {
+        "name": "Diploma in Information Technology",
+        "code": "DIT",
+        "focus": "Networking, database management, cybersecurity",
+        "career_path": "Diverse IT roles in various industries"
+      },
+      {
+        "name": "Diploma in Software Engineering",
+        "code": "DSE",
+        "focus": "Software development methodologies, programming languages, system design",
+        "career_path": "Software industry, application development"
+      }
+    ],
+    "partnerships": {
+      "universities": ["MAHSA University"],
+      "internships": "Offered according to each programme"
+    }
+  },
+  "events": [
+    {
+      "name": "Deepavali",
+      "keywords": ["deepavali", "culture", "divali", "diwali", "indian festival"],
+      "date": "20 October 2025",
+      "location": "SH3BI",
+      "details": "Celebration of Indian culture with cultural performances and traditional activities."
+    },
+    {
+      "name": "Halloween",
+      "keywords": ["halloween", "spooky", "costume", "party", "october"],
+      "date": "31 October 2025",
+      "location": "Main Hall",
+      "details": "Costume contest, games, and music night. Students encouraged to dress up and participate in activities."
+    },
+    {
+      "name": "Mid-Term Exams",
+      "keywords": ["exam", "test", "assessment", "midterm", "mid term"],
+      "date": "10 November 2025",
+      "location": "Lecture Halls",
+      "details": "Mid-term examinations for all enrolled courses. Check your timetable for specific exam schedules."
+    },
+    {
+      "name": "Olympic Sports Day",
+      "keywords": ["sports", "olympic", "games", "competition", "athletics", "sport day"],
+      "date": "15 November 2025",
+      "location": "College Stadium",
+      "details": "A full day of athletic events and competitions among all departments. Register with your department head."
+    },
+    {
+      "name": "FYP Exhibition",
+      "keywords": ["fyp", "project", "exhibition", "final year", "showcase"],
+      "date": "26 November 2025",
+      "location": "College Lobby",
+      "details": "Showcase of final year projects from all departments. Open to public and industry partners."
+    },
+    {
+      "name": "SDCKL OLYMPIAD 2025",
+      "keywords": ["olympiad", "competition", "academic", "sdckl olympiad"],
+      "date": "28 November 2025",
+      "location": "TBD",
+      "details": "Annual academic olympiad competition featuring various academic challenges and competitions."
+    },
+    {
+      "name": "College SRC Election",
+      "keywords": ["src", "election", "student council", "vote", "voting"],
+      "date": "5 December 2025",
+      "location": "Auditorium",
+      "details": "Election for the Student Representative Council. All students are eligible to vote."
+    },
+    {
+      "name": "End-Term Exams",
+      "keywords": ["exam", "final", "assessment", "endterm", "end term", "finals"],
+      "date": "20 December 2025",
+      "location": "Lecture Halls",
+      "details": "Final examinations for all courses in the semester. Check your exam timetable."
+    },
+    {
+      "name": "College Open Day",
+      "keywords": ["open day", "visitors", "campus tour", "activities", "orientation"],
+      "date": "8 January 2026",
+      "location": "Campus Grounds",
+      "details": "Visitors are invited for campus tours, workshops, and student activities. Meet our staff and students."
+    }
+  ],
+  "rules": [
+    "Attend at least 80% of classes to be eligible for examinations.",
+    "Respect staff and fellow students at all times.",
+    "No smoking inside campus premises.",
+    "Maintain proper dress code as per college guidelines.",
+    "Submit assignments and projects by the given deadlines.",
+    "Use of mobile phones is restricted during lectures.",
+    "Respect college property and facilities."
+  ],
+  "lecturer_queries": {
+    "attendance_verification": {
+      "keywords": ["attendance", "verify", "check attendance", "attendance update"],
+      "contact": "Ms. Shamala",
+      "role": "Admin",
+      "action": "Meet to verify attendance",
+      "additional_info": [
+        "Check details in the system",
+        "Attendance updates are usually shared in the SDCKL Official Academic WhatsApp group"
+      ]
+    },
+    "programme_head": {
+      "keywords": ["hop", "head of programme", "it programme head", "program head"],
+      "contact": "Ms. Linda",
+      "role": "Head of Programme (HOP)",
+      "programme": "IT programme"
+    },
+    "classroom_booking": {
+      "keywords": ["classroom", "book classroom", "room booking", "reserve room"],
+      "step_1": {
+        "contact": "Ms. Gayathri",
+        "role": "Head of Academic Affairs (HOA)",
+        "action": "Check classroom availability"
+      },
+      "step_2": {
+        "action": "Book classroom for required time slot",
+        "note": "Verbal confirmation is sufficient"
+      }
+    },
+    "leave_policy": {
+      "keywords": ["leave", "mc", "medical leave", "absence", "sick leave"],
+      "valid_reasons": [
+        "Medical certificate (MC)",
+        "Funeral services"
+      ],
+      "sudden_leave": {
+        "process": "Send email to respective lecturer",
+        "required_documents": ["MC", "Death Certificate (DC)", "Relevant supporting documents"]
+      },
+      "planned_leave": {
+        "process": "Apply via email or written form",
+        "requirements": "All necessary details and supporting documents attached"
+      }
+    }
+  },
+  "staff_non_teaching": {
+    "visitor_policy": {
+      "keywords": ["visitor", "guest", "pass", "visit"],
+      "passes": "No passes provided",
+      "process": "Check in at first-floor office, provide details and reason for visit",
+      "handler": "Ms. Fatihah"
+    },
+    "contacts": {
+      "registry": {
+        "name": "Ms. Liza",
+        "keywords": ["registry", "form", "application"]
+      },
+      "maintenance": {
+        "name": "Mr. Mohammed Safuan",
+        "location": "3rd floor",
+        "keywords": ["maintenance", "repair", "facility"]
+      },
+      "hoa": {
+        "name": "Ms. Gayathri",
+        "role": "Head of Academic Affairs (HOA)",
+        "email": "gayatri@sdckl.edu.my",
+        "keywords": ["hoa", "head of academic", "gayathri"]
+      }
+    }
+  },
+  "parent_information": {
+    "meeting_policy": {
+      "keywords": ["parent meeting", "meet lecturer", "parent visit"],
+      "general": "Parents can meet any lecturer during working hours",
+      "attendance_matters": {
+        "contact": "Ms. Gayathri",
+        "role": "HOA"
+      },
+      "academic_performance": "Meet respective lecturers or Head of Programme (HOP)",
+      "meeting_hours": "9 AM – 6 PM"
+    },
+    "application_process": {
+      "keywords": ["apply", "application", "enroll", "registration"],
+      "method": "Through application form",
+      "required_documents": [
+        "Student's IC copy",
+        "Parent's IC copy",
+        "SPM result",
+        "Registration fee RM500 receipt"
+      ],
+      "form_collection": "Ms. Liza, Registry"
+    },
+    "hostel_security": {
+      "keywords": ["hostel", "accommodation", "safety", "security"],
+      "features": [
+        "Security personnel",
+        "Access cards",
+        "Near shops and bus stops"
+      ],
+      "note": "Parents no need to worry about safety or surroundings"
+    }
+  },
+  "student_council": [
+    {
+      "name": "Nirosha A/p Balamurugan",
+      "student_id": "2402DLS010",
+      "position": "President",
+      "keywords": ["president", "council president", "nirosha"]
+    },
+    {
+      "name": "Saravanan raj A/l Rajoo",
+      "student_id": "2408DLS061",
+      "position": "Vice President",
+      "keywords": ["vice president", "vp", "saravanan"]
+    },
+    {
+  "name": "Kesavan Raj A/L Vigineswaran",
+  "student_id": "2408DSE029",
+  "position": "Secretary",
+  "keywords": ["secretary", "kesavan"]
+},
+    {
+      "name": "Kaneswaran A/L Sugumaran",
+      "student_id": "2408DLS131",
+      "position": "Treasurer",
+      "keywords": ["treasurer", "finance", "kaneswaran"]
+    },
+    {
+      "name": "Shrveen Pillay a/l Sakti Balan",
+      "student_id": "2402DSE001",
+      "position": "Head Of Sports",
+      "keywords": ["sports", "head of sports", "shrveen"]
+    },
+    {
+      "name": "Yogaraj A/L Venu",
+      "student_id": "2408DLS069",
+      "position": "Head Of Students' Welfare",
+      "keywords": ["welfare", "student welfare", "yogaraj"]
+    },
+    {
+      "name": "Kabilan A/L Selvakumaran",
+      "student_id": "2408DLS063",
+      "position": "Head Of Media and Public Relations",
+      "keywords": ["media", "pr", "public relations", "kabilan"]
+    },
+    {
+      "name": "Gankewala gedra sujith rohan Kumara",
+      "student_id": "2410DLS022",
+      "position": "Head of International Students' Affairs",
+      "keywords": ["international", "international students", "sujith"]
+    }
+  ]
+}

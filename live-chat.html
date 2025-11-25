@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AskSDCKL Live Support</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="live-chat-style.css">
+</head>
+<body>
+    <div class="live-chat-container">
+        <header class="chat-header">
+            <h2>AskSDCKL Live Support</h2>
+            <div id="status-indicator">
+                <span class="status-dot"></span>
+                <span id="status-text">Connecting...</span>
+            </div>
+        </header>
+
+        <main id="chat-content">
+            <!-- User Details Form -->
+            <section id="user-details-form">
+                <h3>Please provide your details to start the chat</h3>
+                <form id="details-form">
+                    <div class="input-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="student-id">SDCKL Student ID (Optional)</label>
+                        <input type="text" id="student-id" name="student-id">
+                    </div>
+                    <button type="submit" class="start-chat-btn">Start Chat</button>
+                </form>
+            </section>
+
+            <!-- Chat Interface (Initially Hidden) -->
+            <section id="chat-interface" style="display: none;">
+                <div id="messages"></div>
+                <div id="typing-indicator" style="display: none;">Agent is typing...</div>
+                <!-- Add this inside the chat-interface section, after the messages div -->
+<div id="admin-reply-notification" class="admin-reply-notification" style="display: none;">
+    <div class="notification-content">
+        <div class="notification-header">
+            <span class="notification-icon">📢</span>
+            <span class="notification-title">Admin Reply</span>
+            <button id="close-reply-notification" class="notification-close">✕</button>
+        </div>
+        <div class="notification-message"></div>
+        <button id="view-reply-btn" class="notification-view-btn">View Reply</button>
+    </div>
+</div>
+                <!-- Notification Banner (Initially Hidden) -->
+                <div id="notification-banner" style="display: none;">
+                    <p id="notification-text"></p>
+                    <button id="close-notification">✕</button>
+                </div>
+                
+                <!-- Instant Replies Section -->
+                <div id="instant-replies" class="instant-replies">
+                    <h4>Instant Replies</h4>
+                    <div class="reply-options">
+                        <button class="reply-btn" data-message="What courses does SDCKL offer?">Courses Offered</button>
+                        <button class="reply-btn" data-message="What are the entry requirements?">Entry Requirements</button>
+                        <button class="reply-btn" data-message="How much are the tuition fees?">Tuition Fees</button>
+                        <button class="reply-btn" data-message="Where is the campus located?">Campus Location</button>
+                        <button class="reply-btn" data-message="How do I apply for admission?">Application Process</button>
+                    </div>
+                </div>
+                
+                <div class="chat-input-area">
+                    <input type="text" id="message-input" placeholder="Type your message here..." disabled>
+                    <button id="send-btn" disabled>Send</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="live-chat-script.js"></script>
+</body>
+</html>

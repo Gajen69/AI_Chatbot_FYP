@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AskSDCKL Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-container { display: flex; height: 100vh; }
+        .chat-list { width: 300px; background-color: #f5f5f5; padding: 20px; overflow-y: auto; border-right: 1px solid #ddd; }
+        .chat-window { flex: 1; display: flex; flex-direction: column; background-color: white; }
+        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; }
+        .chat-input { display: flex; padding: 10px; border-top: 1px solid #eee; }
+        .chat-input input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 20px; }
+        .chat-input button { margin-left: 10px; padding: 10px 20px; background-color: #4a69bd; color: white; border: none; border-radius: 20px; cursor: pointer; }
+        .chat-item { background-color: white; border-radius: 8px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.3s ease; }
+        .chat-item:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .chat-item.active { border-left: 4px solid #4a69bd; }
+        .chat-item h3 { margin: 0 0 10px 0; color: #4a69bd; }
+        .chat-item p { margin: 5px 0; font-size: 14px; color: #666; }
+        .chat-status { display: flex; align-items: center; margin-top: 5px; font-size: 12px; }
+        .status-badge { padding: 3px 8px; border-radius: 12px; color: white; font-size: 11px; margin-left: 10px; }
+        .status-pending { background-color: #ffc107; }
+        .status-active { background-color: #28a745; }
+        .status-disconnected { background-color: #dc3545; }
+        .no-active-chat { display: flex; justify-content: center; align-items: center; height: 100%; color: #888; font-size: 18px; }
+        .message { max-width: 70%; padding: 10px 15px; border-radius: 18px; margin-bottom: 10px; }
+        .message.user { background-color: #e9ecef; align-self: flex-end; }
+        .message.admin { background-color: #4a69bd; color: white; align-self: flex-start; }
+        .message.system { text-align: center; font-style: italic; color: #999; background: #f0f0f0; margin: 10px auto; }
+        .pending-messages { background-color: #fff3cd; padding: 10px; border-radius: 8px; margin-bottom: 15px; }
+        .pending-messages h4 { margin-top: 0; color: #856404; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="chat-list">
+            <h2>Active Chats</h2>
+            <div id="chat-list-container">
+                <p style="color: #888;">No active chats at the moment</p>
+            </div>
+        </div>
+        <div class="chat-window">
+            <div class="chat-header">
+                <span id="chat-title">Select a chat to view messages</span>
+                <span id="connection-status">Offline</span>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="no-active-chat">
+                    <p>Select a chat on the left to start helping users</p>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="admin-message-input" placeholder="Type your message..." disabled>
+                <button id="admin-send-btn" disabled>Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const chatListContainer = document.getElementById('chat-list-container');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatTitle = document.getElementById('chat-title');
+        const connectionStatus = document.getElementById('connection-status');
+        const messageInput = document.getElementById('admin-message-input');
+        const sendButton = document.getElementById('admin-send-btn');
+        
+        let currentChatId = null;
+        let currentUserData = null;
+
+        // Update connection status
+        socket.on('connect', () => {
+            connectionStatus.textContent = 'Online';
+            connectionStatus.style.color = '#28a745';
+        });
+
+        socket.on('disconnect', () => {
+            connectionStatus.textContent = 'Offline';
+            connectionStatus.style.color = '#dc3545';
+        });
+
+        // Handle new chat requests
+        socket.on('newChatStarted', (data) => {
+            const { chatId, userData, status, createdAt } = data;
+            
+            // Create a new chat item in the list
+            const chatItem = document.createElement('div');
+            chatItem.className = 'chat-item';
+            chatItem.id = `chat-item-${chatId}`;
+            
+            const statusClass = status === 'pending' ? 'status-pending' : 
+                              status === 'active' ? 'status-active' : 'status-disconnected';
+            
+            chatItem.innerHTML = `
+                <h3>${userData.name}</h3>
+                <p>Email: ${userData.email}</p>
+                <p>Phone: ${userData.phone}</p>
+                <div class="chat-status">
+                    Status: <span class="status-badge ${statusClass}">${status}</span>
+                </div>
+            `;
+            
+            // Add event listener to select the chat
+            chatItem.addEventListener('click', () => {
+                selectChat(chatId, userData);
+            });
+            
+            // Add to the list
+            if (chatListContainer.children.length === 1 && chatListContainer.children[0].textContent === 'No active chats at the moment') {
+                chatListContainer.innerHTML = '';
+            }
+            chatListContainer.appendChild(chatItem);
+        });
+
+        // Handle chat status changes
+        socket.on('chatStatusChanged', (data) => {
+            const { chatId, status, adminId } = data;
+            const chatItem = document.getElementById(`chat-item-${chatId}`);
+            
+            if (chatItem) {
+                const statusBadge = chatItem.querySelector('.status-badge');
+                
+                // Update status badge
+                statusBadge.className = `status-badge ${status === 'active' ? 'status-active' : 
+                                                 status === 'disconnected' ? 'status-disconnected' : 'status-pending'}`;
+                statusBadge.textContent = status;
+                
+                // If this is the current chat, update the input status
+                if (currentChatId === chatId) {
+                    if (status === 'active') {
+                        messageInput.disabled = false;
+                        sendButton.disabled = false;
+                    } else {
+                        messageInput.disabled = true;
+                        sendButton.disabled = true;
+                    }
+                }
+            }
+        });
+
+        // Handle user messages
+        socket.on('userMessage', (data) => {
+            const { chatId, message, status, userData } = data;
+            
+            // If this message is for the currently selected chat, display it
+            if (chatId === currentChatId) {
+                addMessage('user', message.message, userData.name);
+            }
+        });
+
+        // Handle pending messages
+        socket.on('pendingMessages', (data) => {
+            const { chatId, messages } = data;
+            
+            if (chatId === currentChatId && messages.length > 0) {
+                // Show a notification about pending messages
+                const pendingDiv = document.createElement('div');
+                pendingDiv.className = 'pending-messages';
+                pendingDiv.innerHTML = `
+                    <h4>Messages sent while you were away:</h4>
+                    ${messages.map(msg => `<div class="message user">${msg.message}</div>`).join('')}
+                `;
+                
+                chatMessages.appendChild(pendingDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+
+        // Handle user disconnection
+        socket.on('userDisconnected', (data) => {
+            const { chatId, status } = data;
+            const chatItem = document.getElementById(`chat-item-${chatId}`);
+            
+            if (chatItem) {
+                const statusBadge = chatItem.querySelector('.status-badge');
+                statusBadge.className = 'status-badge status-disconnected';
+                statusBadge.textContent = 'disconnected';
+                
+                // If this was the current chat, disable input
+                if (currentChatId === chatId) {
+                    messageInput.disabled = true;
+                    sendButton.disabled = true;
+                    addMessage('system', 'User has left the chat');
+                }
+            }
+        });
+
+        // Function to select a chat
+        function selectChat(chatId, userData) {
+            currentChatId = chatId;
+            currentUserData = userData;
+            
+            // Update UI
+            chatTitle.textContent = `Chat with ${userData.name}`;
+            messageInput.disabled = false;
+            sendButton.disabled = false;
+            
+            // Clear messages and add a welcome message
+            chatMessages.innerHTML = '';
+            addMessage('system', `You are now viewing the chat with ${userData.name}`);
+            
+            // Update chat item UI
+            document.querySelectorAll('.chat-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.getElementById(`chat-item-${chatId}`).classList.add('active');
+            
+            // Accept the chat
+            socket.emit('adminAcceptChat', { chatId, adminId: socket.id });
+        }
+
+        // Send message
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (message && currentChatId) {
+                addMessage('admin', message, 'You');
+                messageInput.value = '';
+                
+                socket.emit('adminMessage', {
+                    chatId: currentChatId,
+                    message: message
+                });
+            }
+        }
+
+        // Add message to chat
+        function addMessage(sender, text, senderName) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            if (sender === 'system') {
+                messageDiv.textContent = text;
+            } else {
+                messageDiv.innerHTML = `<strong>${senderName}:</strong> ${text}`;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Event listeners
+        sendButton.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
